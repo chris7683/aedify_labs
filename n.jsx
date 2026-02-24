@@ -323,18 +323,30 @@ const SERVICES = [
 ];
 
 const PROJECTS = [
-  { title: "Luminary Finance", cat: "Web App", year: "2024", bg: "#0d2818", accent: "#4ade80", initials: "LF" },
-  { title: "Verd Studio", cat: "Portfolio", year: "2024", bg: "#1a1208", accent: "#fbbf24", initials: "VS" },
-  { title: "Nova Commerce", cat: "E-Commerce", year: "2023", bg: "#0d1228", accent: "#60a5fa", initials: "NC" },
-  { title: "Meridian SaaS", cat: "Dashboard", year: "2023", bg: "#1a0d28", accent: "#c084fc", initials: "MS" },
+  { title: "Luminary Finance", cat: "Web App", year: "2024", bg: "#0d2818", accent: "#4ade80", initials: "LF", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    preview: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=90",
+    desc: "A comprehensive financial web app featuring real-time portfolio tracking, interactive charts, and AI-powered investment insights. Built with React and Node.js.",
+    tech: ["React", "Node.js", "D3.js", "PostgreSQL"] },
+  { title: "Verd Studio", cat: "Portfolio", year: "2024", bg: "#1a1208", accent: "#fbbf24", initials: "VS", img: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80",
+    preview: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1400&q=90",
+    desc: "A stunning portfolio site for a creative design studio with immersive scroll animations, 3D project showcases, and a custom CMS for easy content updates.",
+    tech: ["Next.js", "Three.js", "Framer Motion", "Sanity CMS"] },
+  { title: "Nova Commerce", cat: "E-Commerce", year: "2023", bg: "#0d1228", accent: "#60a5fa", initials: "NC", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+    preview: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1400&q=90",
+    desc: "A high-converting e-commerce platform with smart product recommendations, one-click checkout, and real-time inventory management across multiple warehouses.",
+    tech: ["Shopify Plus", "React", "Stripe", "Algolia"] },
+  { title: "Meridian SaaS", cat: "Dashboard", year: "2023", bg: "#1a0d28", accent: "#c084fc", initials: "MS", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    preview: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=90",
+    desc: "An enterprise SaaS dashboard with real-time analytics, team collaboration tools, customizable widgets, and automated reporting for data-driven decisions.",
+    tech: ["React", "TypeScript", "GraphQL", "AWS"] },
 ];
 
 const STATS = [["50+", "Projects Shipped"], ["98%", "Happy Clients"], ["<1s", "Avg Load Time"], ["8", "Countries Served"]];
 
 const PRICING = [
-  { plan: "Starter", price: "$1,200", desc: "Perfect to launch online.", features: ["5-page site", "Mobile ready", "SEO basics", "CMS setup", "1-month support"], accent: "#a855f7", hot: false },
-  { plan: "Growth", price: "$3,500", desc: "Serious about your digital presence.", features: ["Up to 15 pages", "Custom animations", "E-commerce", "Perf optimization", "3-month support", "Analytics"], accent: "#3b82f6", hot: true },
-  { plan: "Scale", price: "Custom", desc: "Enterprise-grade, your way.", features: ["Unlimited pages", "Design system", "Integrations", "Dedicated dev", "Priority support", "Strategy calls"], accent: "#10b981", hot: false },
+  { plan: "Starter Kit", desc: "Everything you need to get online.", features: ["5-page site", "Mobile responsive", "Basic SEO", "Contact form", "2 revision rounds"], accent: "#a855f7", hot: false },
+  { plan: "Growth Engine", desc: "Scale your digital presence.", features: ["Up to 15 pages", "Custom animations", "CMS integration", "Performance optimization", "Analytics setup", "3-month support"], accent: "#3b82f6", hot: true },
+  { plan: "Elite Partnership", desc: "Full-service digital transformation.", features: ["Unlimited pages", "Design system", "Custom integrations", "Dedicated developer", "Priority support", "Strategy sessions", "Ongoing optimization"], accent: "#10b981", hot: false },
 ];
 
 const TESTIMONIALS = [
@@ -353,6 +365,7 @@ function AdefiyLabs() {
   const [activeTest, setActiveTest] = useState(0);
   const [form, setForm] = useState({ name: "", email: "", project: "", budget: "" });
   const [sent, setSent] = useState(false);
+  const [previewProject, setPreviewProject] = useState(null);
   const [statsRef, statsVis] = [useRef(null), useRef(false)];
   const [statsVisible, setStatsVisible] = useState(false);
   const orbRef = useRef(null);
@@ -362,6 +375,7 @@ function AdefiyLabs() {
   useEffect(() => { if (!intro) setTimeout(() => setHeroOn(true), 150); }, [intro]);
   useEffect(() => { const fn = () => setScrolled(window.scrollY > 50); window.addEventListener("scroll", fn, { passive: true }); return () => window.removeEventListener("scroll", fn); }, []);
   useEffect(() => { const t = setInterval(() => setActiveTest(p => (p + 1) % TESTIMONIALS.length), 5000); return () => clearInterval(t); }, []);
+  useEffect(() => { const fn = e => { if (e.key === "Escape") setPreviewProject(null); }; window.addEventListener("keydown", fn); return () => window.removeEventListener("keydown", fn); }, []);
   useEffect(() => {
     const fn = e => {
       if (!orbRef.current) return;
@@ -395,6 +409,43 @@ function AdefiyLabs() {
 
       {intro && <Intro onDone={() => setIntro(false)} />}
       <Cursor />
+
+      {/* ══ PROJECT PREVIEW MODAL ══ */}
+      {previewProject && (
+        <div onClick={() => setPreviewProject(null)} style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(0,0,0,.85)", backdropFilter: "blur(20px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "none", padding: 40, animation: "slideInUp .5s cubic-bezier(.16,1,.3,1)" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "#111", borderRadius: 28, overflow: "hidden", maxWidth: 960, width: "100%", maxHeight: "90vh", overflowY: "auto", border: "1px solid rgba(255,255,255,.1)", position: "relative" }}>
+            {/* Close button */}
+            <button data-h onClick={() => setPreviewProject(null)} style={{ position: "absolute", top: 20, right: 20, zIndex: 2, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", color: "#fff", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center", cursor: "none", transition: "background .2s" }} onMouseEnter={e => e.target.style.background = "rgba(255,255,255,.2)"} onMouseLeave={e => e.target.style.background = "rgba(255,255,255,.1)"}>✕</button>
+            {/* Preview image */}
+            <div style={{ position: "relative", width: "100%", height: 440, overflow: "hidden" }}>
+              <img src={previewProject.preview} alt={previewProject.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, #111 0%, transparent 50%)` }} />
+              <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 30% 60%, ${previewProject.accent}15, transparent 65%)` }} />
+            </div>
+            {/* Content */}
+            <div style={{ padding: "0 48px 48px", marginTop: -60, position: "relative" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: previewProject.accent, background: `${previewProject.accent}20`, padding: "5px 14px", borderRadius: 20 }}>{previewProject.cat}</span>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,.3)", fontWeight: 600 }}>{previewProject.year}</span>
+              </div>
+              <h2 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 36, letterSpacing: "-.03em", marginBottom: 16 }}>{previewProject.title}</h2>
+              <p style={{ fontSize: 16, color: "rgba(255,255,255,.5)", lineHeight: 1.8, fontWeight: 300, marginBottom: 32, maxWidth: 640 }}>{previewProject.desc}</p>
+              <div style={{ marginBottom: 36 }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(255,255,255,.25)", marginBottom: 14 }}>Tech Stack</p>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  {previewProject.tech.map(t => (
+                    <span key={t} style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".04em", padding: "8px 18px", borderRadius: 50, background: `${previewProject.accent}12`, color: previewProject.accent, border: `1px solid ${previewProject.accent}25` }}>{t}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 14 }}>
+                <button className="btn-white" data-h onClick={() => { setPreviewProject(null); go("contact"); }} style={{ fontSize: 13, padding: "13px 28px" }}>Start Similar Project →</button>
+                <button className="btn-outline" data-h onClick={() => setPreviewProject(null)} style={{ fontSize: 13, padding: "12px 28px" }}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Fixed grid */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)", backgroundSize: "72px 72px", opacity: 0.8 }} />
@@ -519,18 +570,18 @@ function AdefiyLabs() {
             <Reveal delay={.2}><p style={{ fontSize: 15, color: "rgba(255,255,255,.35)", maxWidth: 320, lineHeight: 1.78, fontWeight: 300 }}>Full-stack agency that handles everything from concept to launch — and beyond.</p></Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(268px,1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
             {SERVICES.map((s, i) => (
               <Reveal key={s.id} delay={i * .12} dir="up">
                 <Tilt strength={12}>
                   <div className="service-card" data-h style={{ background: s.bg }}>
                     {/* Glow accent */}
                     <div style={{ position: "absolute", top: -40, right: -40, width: 140, height: 140, borderRadius: "50%", background: s.accent, opacity: .12, filter: "blur(40px)", pointerEvents: "none" }} />
-                    <div style={{ fontSize: 40, marginBottom: 24, animation: `wiggle 3s ease-in-out infinite ${i * .4}s`, display: "inline-block" }}>{s.emoji}</div>
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: s.accent, opacity: .7, marginBottom: 14, textTransform: "uppercase" }}>{s.id}</div>
-                    <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 24, marginBottom: 6, letterSpacing: "-.02em" }}>{s.title}</h3>
-                    <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: ".06em", color: "rgba(255,255,255,.35)", textTransform: "uppercase", marginBottom: 20 }}>{s.sub}</p>
-                    <p style={{ fontSize: 14.5, color: "rgba(255,255,255,.5)", lineHeight: 1.75, fontWeight: 300, marginBottom: 28 }}>{s.desc}</p>
+                    <div style={{ fontSize: 36, marginBottom: 20, animation: `wiggle 3s ease-in-out infinite ${i * .4}s`, display: "inline-block" }}>{s.emoji}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: s.accent, opacity: .7, marginBottom: 12, textTransform: "uppercase" }}>{s.id}</div>
+                    <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 22, marginBottom: 6, letterSpacing: "-.02em" }}>{s.title}</h3>
+                    <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: ".06em", color: "rgba(255,255,255,.35)", textTransform: "uppercase", marginBottom: 16 }}>{s.sub}</p>
+                    <p style={{ fontSize: 14, color: "rgba(255,255,255,.5)", lineHeight: 1.75, fontWeight: 300, marginBottom: 24 }}>{s.desc}</p>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                       {s.tags.map(t => <span key={t} className="chip" style={{ background: `${s.accent}18`, color: s.accent, border: `1px solid ${s.accent}30` }}>{t}</span>)}
                     </div>
@@ -559,10 +610,10 @@ function AdefiyLabs() {
             {PROJECTS.map((p, i) => (
               <Reveal key={p.title} delay={i * .1} dir={i % 2 === 0 ? "left" : "right"}>
                 <Tilt strength={7} style={{ borderRadius: 24 }}>
-                  <div className="proj-card" data-h>
+                  <div className="proj-card" data-h onClick={() => setPreviewProject(p)}>
                     <div style={{ height: i < 2 ? 360 : 260, background: p.bg, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
-                      {/* Giant letters */}
-                      <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 130, color: "rgba(255,255,255,.04)", letterSpacing: "-.05em", userSelect: "none" }}>{p.initials}</div>
+                      {/* Project photo */}
+                      <img src={p.img} alt={p.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.45 }} />
                       {/* Accent glow */}
                       <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 30% 60%, ${p.accent}20, transparent 65%)` }} />
                       {/* Shimmer */}
@@ -594,9 +645,9 @@ function AdefiyLabs() {
       <section id="pricing" style={{ padding: "140px 52px", background: "rgba(255,255,255,.015)", borderTop: "1px solid rgba(255,255,255,.05)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 80 }}>
-            <Reveal><span className="eyebrow" style={{ color: "rgba(255,255,255,.3)", justifyContent: "center", marginBottom: 20, display: "flex" }}>Investment</span></Reveal>
-            <Words text="Transparent pricing." delay={0} style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(40px,5vw,72px)", lineHeight: 1, letterSpacing: "-.03em", justifyContent: "center" }} />
-            <Reveal delay={.2}><p style={{ fontSize: 16, color: "rgba(255,255,255,.3)", marginTop: 24, fontWeight: 300 }}>No surprises. No hidden fees. Just exceptional work.</p></Reveal>
+            <Reveal><span className="eyebrow" style={{ color: "rgba(255,255,255,.3)", justifyContent: "center", marginBottom: 20, display: "flex" }}>Packages</span></Reveal>
+            <Words text="Choose your plan." delay={0} style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(40px,5vw,72px)", lineHeight: 1, letterSpacing: "-.03em", justifyContent: "center" }} />
+            <Reveal delay={.2}><p style={{ fontSize: 16, color: "rgba(255,255,255,.3)", marginTop: 24, fontWeight: 300 }}>Three tiers. One standard: exceptional work.</p></Reveal>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
@@ -608,21 +659,19 @@ function AdefiyLabs() {
                     {/* Glow */}
                     <div style={{ position: "absolute", top: -60, right: -60, width: 180, height: 180, borderRadius: "50%", background: p.accent, opacity: .06, filter: "blur(50px)", pointerEvents: "none" }} />
                     <div style={{ position: "relative" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
-                        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".15em", textTransform: "uppercase", color: "rgba(255,255,255,.3)" }}>{p.plan}</span>
+                      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginBottom: 28, minHeight: 24 }}>
                         {p.hot && <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".08em", color: p.accent, background: `${p.accent}20`, padding: "4px 12px", borderRadius: 20 }}>★ Popular</span>}
                       </div>
                       <div
                         style={{
                           fontFamily: "'Syne',sans-serif",
                           fontWeight: 800,
-                          fontSize: "clamp(38px,3.2vw,52px)",
-                          letterSpacing: "-.04em",
+                          fontSize: "clamp(28px,2.5vw,38px)",
+                          letterSpacing: "-.03em",
                           marginBottom: 8,
-                          whiteSpace: "nowrap",
                         }}
                       >
-                        {p.price}
+                        {p.plan}
                       </div>
                       <p style={{ fontSize: 13, color: "rgba(255,255,255,.3)", marginBottom: 32, lineHeight: 1.6 }}>{p.desc}</p>
                       <div style={{ height: 1, background: "rgba(255,255,255,.07)", marginBottom: 28 }} />
@@ -636,7 +685,7 @@ function AdefiyLabs() {
                       <button data-h onClick={() => go("contact")} style={{ width: "100%", fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: 14, border: "none", borderRadius: 50, padding: "15px", cursor: "none", background: p.hot ? p.accent : "rgba(255,255,255,.08)", color: p.hot ? "#fff" : "rgba(255,255,255,.8)", transition: "transform .3s,opacity .3s" }}
                         onMouseEnter={e => e.target.style.opacity = ".85"}
                         onMouseLeave={e => e.target.style.opacity = "1"}>
-                        {p.price === "Custom" ? "Let's Talk →" : "Get Started →"}
+                        Get Started →
                       </button>
                     </div>
                   </div>
