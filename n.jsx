@@ -88,6 +88,109 @@ body{cursor:none}
 .eyebrow{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px}
 .dot-pulse{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.8s ease-in-out infinite;display:inline-block}
 .cursor-ring{position:fixed;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top}
+
+/* ─── HAMBURGER ─── */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;cursor:pointer;transition:border-color .3s}
+.hamburger:hover{border-color:rgba(255,255,255,.3)}
+.hamburger span{display:block;width:100%;height:1.5px;background:#fff;border-radius:2px;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .25s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* Mobile nav overlay */
+.mobile-nav{position:fixed;inset:0;z-index:999;background:rgba(8,8,8,.97);backdrop-filter:blur(32px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.16,1,.3,1)}
+.mobile-nav.open{opacity:1;pointer-events:auto}
+.mobile-nav-link{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;color:rgba(255,255,255,.5);background:none;border:none;padding:18px 0;cursor:pointer;transition:color .25s,transform .3s;position:relative}
+.mobile-nav-link:hover,.mobile-nav-link:active{color:#fff;transform:translateX(8px)}
+.mobile-nav-link::before{content:'';position:absolute;left:-20px;top:50%;width:0;height:1.5px;background:linear-gradient(90deg,#a855f7,#3b82f6);transition:width .3s cubic-bezier(.16,1,.3,1);transform:translateY(-50%)}
+.mobile-nav-link:hover::before,.mobile-nav-link:active::before{width:14px}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  /* Hide custom cursor on touch devices */
+  html,body{overflow-x:hidden!important;cursor:auto!important}
+  *{cursor:auto!important}
+  .cursor-ring{display:none!important}
+
+  /* Nav */
+  .nav-bar{padding:0 20px!important;height:60px!important}
+  .nav-links{display:none!important}
+  .nav-cta{display:none!important}
+  .hamburger{display:flex!important}
+
+  /* Sections */
+  .s-hero{padding:90px 24px 48px!important;min-height:100vh!important;min-height:100dvh!important}
+  .s-services,.s-pricing,.s-testimonials{padding:72px 24px!important}
+  .s-portfolio{padding:0 24px 72px!important}
+  .s-about{padding:0 24px 72px!important}
+  .s-contact{padding:0 24px 72px!important}
+
+  /* Hero */
+  .hero-headline{font-size:clamp(40px,12vw,60px)!important;line-height:.88!important}
+  .hero-badges{display:none!important;visibility:hidden!important;width:0!important;height:0!important;overflow:hidden!important;position:absolute!important}
+  .hero-ctas{flex-direction:column!important;width:100%!important;gap:12px!important}
+  .hero-ctas .btn-white,.hero-ctas .btn-outline{width:100%!important;text-align:center!important;display:block!important;padding:16px 28px!important;font-size:15px!important}
+  .hero-sub-row{flex-direction:column!important;align-items:flex-start!important;gap:28px!important}
+  .hero-sub-text{font-size:15px!important;line-height:1.7!important}
+  .hero-eyebrow{margin-bottom:24px!important}
+  .hero-divider{margin-top:28px!important;margin-bottom:28px!important}
+  .hero-scroll{display:none!important}
+
+  /* Stats */
+  .grid-stats{grid-template-columns:repeat(2,1fr)!important;padding:0 24px!important}
+  .stat-item{border-right:none!important;padding-left:0!important;padding:28px 0!important}
+  .stat-item:nth-child(odd){border-right:1px solid rgba(255,255,255,.06)!important;padding-right:20px!important}
+  .stat-item:nth-child(even){padding-left:20px!important}
+  .stat-val{font-size:clamp(32px,9vw,48px)!important}
+
+  /* Services */
+  .grid-services{grid-template-columns:1fr!important}
+  .service-card{padding:32px 28px!important}
+
+  /* Portfolio */
+  .grid-projects{grid-template-columns:1fr!important}
+  .proj-img{height:240px!important}
+
+  /* Pricing */
+  .grid-pricing{grid-template-columns:1fr!important}
+  .price-card{padding:36px 28px!important}
+
+  /* Testimonials */
+  .testimonial-card{padding:32px 24px!important;border-radius:20px!important}
+  .testimonial-quote-mark{font-size:72px!important;top:12px!important;right:16px!important}
+  .testimonial-body{min-height:260px!important}
+
+  /* About */
+  .grid-about{grid-template-columns:1fr!important;gap:48px!important}
+
+  /* Contact */
+  .contact-box{padding:36px 24px!important;border-radius:24px!important}
+  .grid-contact{grid-template-columns:1fr!important;gap:36px!important}
+  .grid-contact-inputs{grid-template-columns:1fr!important}
+
+  /* Footer */
+  .site-footer{padding:48px 24px 36px!important}
+  .footer-cols{gap:36px!important;flex-direction:column!important}
+  .footer-nav{gap:48px!important}
+
+  /* Modal */
+  .modal-overlay{padding:12px!important}
+  .modal-img{height:220px!important}
+  .modal-content{padding:0 24px 24px!important;margin-top:-40px!important}
+  .modal-title{font-size:24px!important}
+  .modal-btns{flex-direction:column!important}
+  .modal-btns .btn-white,.modal-btns .btn-outline{width:100%!important;text-align:center!important}
+
+  /* Marquee sizing */
+  .marq-lg span{font-size:32px!important;padding:0 20px!important}
+}
+
+@media (max-width: 480px) {
+  .hero-headline{font-size:clamp(36px,11vw,48px)!important}
+  .stat-val{font-size:clamp(26px,8vw,38px)!important}
+  .testimonial-body{min-height:300px!important}
+  .mobile-nav-link{font-size:28px}
+}
 `;
 
 /* ─────────────────────────────────────────────────────────
@@ -362,6 +465,7 @@ function AdefiyLabs() {
   const [intro, setIntro] = useState(true);
   const [heroOn, setHeroOn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [activeTest, setActiveTest] = useState(0);
   const [form, setForm] = useState({ name: "", email: "", project: "", budget: "" });
   const [sent, setSent] = useState(false);
@@ -375,7 +479,8 @@ function AdefiyLabs() {
   useEffect(() => { if (!intro) setTimeout(() => setHeroOn(true), 150); }, [intro]);
   useEffect(() => { const fn = () => setScrolled(window.scrollY > 50); window.addEventListener("scroll", fn, { passive: true }); return () => window.removeEventListener("scroll", fn); }, []);
   useEffect(() => { const t = setInterval(() => setActiveTest(p => (p + 1) % TESTIMONIALS.length), 5000); return () => clearInterval(t); }, []);
-  useEffect(() => { const fn = e => { if (e.key === "Escape") setPreviewProject(null); }; window.addEventListener("keydown", fn); return () => window.removeEventListener("keydown", fn); }, []);
+  useEffect(() => { const fn = e => { if (e.key === "Escape") { setPreviewProject(null); setMenuOpen(false); } }; window.addEventListener("keydown", fn); return () => window.removeEventListener("keydown", fn); }, []);
+  useEffect(() => { document.body.style.overflow = menuOpen ? "hidden" : ""; return () => { document.body.style.overflow = ""; }; }, [menuOpen]);
   useEffect(() => {
     const fn = e => {
       if (!orbRef.current) return;
@@ -404,7 +509,7 @@ function AdefiyLabs() {
   const go = id => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", background: "#080808", color: "#fff", overflowX: "hidden", cursor: "none" }}>
+    <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", background: "#080808", color: "#fff", overflowX: "hidden", cursor: "none", maxWidth: "100vw" }}>
       <style>{CSS}</style>
 
       {intro && <Intro onDone={() => setIntro(false)} />}
@@ -412,23 +517,23 @@ function AdefiyLabs() {
 
       {/* ══ PROJECT PREVIEW MODAL ══ */}
       {previewProject && (
-        <div onClick={() => setPreviewProject(null)} style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(0,0,0,.85)", backdropFilter: "blur(20px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "none", padding: 40, animation: "slideInUp .5s cubic-bezier(.16,1,.3,1)" }}>
+        <div className="modal-overlay" onClick={() => setPreviewProject(null)} style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(0,0,0,.85)", backdropFilter: "blur(20px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "none", padding: 40, animation: "slideInUp .5s cubic-bezier(.16,1,.3,1)" }}>
           <div onClick={e => e.stopPropagation()} style={{ background: "#111", borderRadius: 28, overflow: "hidden", maxWidth: 960, width: "100%", maxHeight: "90vh", overflowY: "auto", border: "1px solid rgba(255,255,255,.1)", position: "relative" }}>
             {/* Close button */}
             <button data-h onClick={() => setPreviewProject(null)} style={{ position: "absolute", top: 20, right: 20, zIndex: 2, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", color: "#fff", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center", cursor: "none", transition: "background .2s" }} onMouseEnter={e => e.target.style.background = "rgba(255,255,255,.2)"} onMouseLeave={e => e.target.style.background = "rgba(255,255,255,.1)"}>✕</button>
             {/* Preview image */}
-            <div style={{ position: "relative", width: "100%", height: 440, overflow: "hidden" }}>
+            <div className="modal-img" style={{ position: "relative", width: "100%", height: 440, overflow: "hidden" }}>
               <img src={previewProject.preview} alt={previewProject.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, #111 0%, transparent 50%)` }} />
               <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 30% 60%, ${previewProject.accent}15, transparent 65%)` }} />
             </div>
             {/* Content */}
-            <div style={{ padding: "0 48px 48px", marginTop: -60, position: "relative" }}>
+            <div className="modal-content" style={{ padding: "0 48px 48px", marginTop: -60, position: "relative" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: previewProject.accent, background: `${previewProject.accent}20`, padding: "5px 14px", borderRadius: 20 }}>{previewProject.cat}</span>
                 <span style={{ fontSize: 12, color: "rgba(255,255,255,.3)", fontWeight: 600 }}>{previewProject.year}</span>
               </div>
-              <h2 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 36, letterSpacing: "-.03em", marginBottom: 16 }}>{previewProject.title}</h2>
+              <h2 className="modal-title" style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 36, letterSpacing: "-.03em", marginBottom: 16 }}>{previewProject.title}</h2>
               <p style={{ fontSize: 16, color: "rgba(255,255,255,.5)", lineHeight: 1.8, fontWeight: 300, marginBottom: 32, maxWidth: 640 }}>{previewProject.desc}</p>
               <div style={{ marginBottom: 36 }}>
                 <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(255,255,255,.25)", marginBottom: 14 }}>Tech Stack</p>
@@ -438,7 +543,7 @@ function AdefiyLabs() {
                   ))}
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 14 }}>
+              <div className="modal-btns" style={{ display: "flex", gap: 14 }}>
                 <button className="btn-white" data-h onClick={() => { setPreviewProject(null); go("contact"); }} style={{ fontSize: 13, padding: "13px 28px" }}>Start Similar Project →</button>
                 <button className="btn-outline" data-h onClick={() => setPreviewProject(null)} style={{ fontSize: 13, padding: "12px 28px" }}>Close</button>
               </div>
@@ -451,40 +556,57 @@ function AdefiyLabs() {
       <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)", backgroundSize: "72px 72px", opacity: 0.8 }} />
 
       {/* ══ NAV ══════════════════════════════════════════════ */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, height: 68, padding: "0 52px", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrolled ? "rgba(8,8,8,.9)" : "transparent", backdropFilter: scrolled ? "blur(24px)" : "none", borderBottom: scrolled ? "1px solid rgba(255,255,255,.06)" : "1px solid transparent", transition: "all .5s cubic-bezier(.16,1,.3,1)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 20, letterSpacing: "-.02em" }}>
+      <nav className="nav-bar" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, height: 68, padding: "0 52px", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrolled || menuOpen ? "rgba(8,8,8,.95)" : "transparent", backdropFilter: scrolled || menuOpen ? "blur(24px)" : "none", borderBottom: scrolled ? "1px solid rgba(255,255,255,.06)" : "1px solid transparent", transition: "all .5s cubic-bezier(.16,1,.3,1)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 20, letterSpacing: "-.02em", position: "relative", zIndex: 1001 }}>
           <span className="dot-pulse" />
           Adefiy<span style={{ color: "rgba(255,255,255,.25)", fontWeight: 400 }}> Labs</span>
         </div>
-        <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
+        <div className="nav-links" style={{ display: "flex", gap: 40, alignItems: "center" }}>
           {["Services", "Work", "Pricing", "About"].map(l => (
             <button key={l} className="nav-link" data-h onClick={() => go(l.toLowerCase())}>{l}</button>
           ))}
-          <button className="btn-white" style={{ padding: "11px 26px", fontSize: 13 }} data-h onClick={() => go("contact")}>Start Project →</button>
         </div>
+        <button className="btn-white nav-cta" style={{ padding: "11px 26px", fontSize: 13 }} data-h onClick={() => go("contact")}>Start Project →</button>
+        <button className={`hamburger${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu" style={{ position: "relative", zIndex: 1001 }}>
+          <span /><span /><span />
+        </button>
       </nav>
 
+      {/* ══ MOBILE NAV OVERLAY ════════════════════════════════ */}
+      <div className={`mobile-nav${menuOpen ? " open" : ""}`}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+          {["Services", "Work", "Pricing", "About", "Contact"].map((l, i) => (
+            <button key={l} className="mobile-nav-link" style={{ opacity: menuOpen ? 1 : 0, transform: menuOpen ? "none" : "translateY(20px)", transition: `opacity .4s ${.1 + i * .06}s, transform .5s cubic-bezier(.16,1,.3,1) ${.1 + i * .06}s` }} onClick={() => { setMenuOpen(false); go(l.toLowerCase()); }}>{l}</button>
+          ))}
+        </div>
+        <button className="btn-white" style={{ marginTop: 40, padding: "16px 44px", fontSize: 15, opacity: menuOpen ? 1 : 0, transform: menuOpen ? "none" : "translateY(16px)", transition: "opacity .4s .45s, transform .5s cubic-bezier(.16,1,.3,1) .45s" }} onClick={() => { setMenuOpen(false); go("contact"); }}>Start Project →</button>
+        {/* Decorative gradient */}
+        <div style={{ position: "absolute", bottom: "10%", left: "50%", transform: "translateX(-50%)", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle,rgba(139,92,246,.08),rgba(59,130,246,.05),transparent 70%)", pointerEvents: "none" }} />
+      </div>
+
       {/* ══ HERO ═════════════════════════════════════════════ */}
-      <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "120px 52px 80px", position: "relative", overflow: "hidden" }}>
+      <section className="s-hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "120px 52px 80px", position: "relative", overflow: "hidden" }}>
         {/* Gradient orb */}
         <div ref={orbRef} style={{ position: "absolute", left: "58%", top: "42%", width: 800, height: 800, borderRadius: "50%", background: "radial-gradient(circle,rgba(139,92,246,.11) 0%,rgba(59,130,246,.07) 45%,transparent 70%)", filter: "blur(30px)", pointerEvents: "none", transition: "transform .9s cubic-bezier(.16,1,.3,1)", zIndex: 0 }} />
         {/* Morph accent */}
         <div style={{ position: "absolute", right: "-5%", bottom: "5%", width: 340, height: 340, background: "radial-gradient(circle,rgba(16,185,129,.08),transparent 70%)", animation: "morphBlob 9s ease-in-out infinite", pointerEvents: "none", zIndex: 0 }} />
 
         {/* Floating badges */}
-        <Badge style={{ position: "absolute", top: "22%", right: "6%", background: "rgba(139,92,246,.15)", color: "#c4b5fd", fontSize: 13, zIndex: 2, animationDelay: "0s" }} anim="floatA">
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>✦ Design Systems</div>
-        </Badge>
-        <Badge style={{ position: "absolute", bottom: "25%", right: "12%", background: "rgba(16,185,129,.12)", color: "#6ee7b7", fontSize: 13, zIndex: 2, animationDelay: "1.2s" }} anim="floatB">
-          ⚡ 50+ Projects
-        </Badge>
-        <Badge style={{ position: "absolute", top: "55%", left: "3%", background: "rgba(59,130,246,.12)", color: "#93c5fd", fontSize: 12, zIndex: 2, animationDelay: ".6s" }} anim="floatC">
-          🚀 Sub-1s Load Time
-        </Badge>
+        <div className="hero-badges" style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2 }}>
+          <Badge style={{ position: "absolute", top: "22%", right: "6%", background: "rgba(139,92,246,.15)", color: "#c4b5fd", fontSize: 13, animationDelay: "0s" }} anim="floatA">
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>✦ Design Systems</div>
+          </Badge>
+          <Badge style={{ position: "absolute", bottom: "25%", right: "12%", background: "rgba(16,185,129,.12)", color: "#6ee7b7", fontSize: 13, animationDelay: "1.2s" }} anim="floatB">
+            ⚡ 50+ Projects
+          </Badge>
+          <Badge style={{ position: "absolute", top: "55%", left: "3%", background: "rgba(59,130,246,.12)", color: "#93c5fd", fontSize: 12, animationDelay: ".6s" }} anim="floatC">
+            🚀 Sub-1s Load Time
+          </Badge>
+        </div>
 
         <div style={{ position: "relative", zIndex: 1 }}>
           {/* Eyebrow */}
-          <div style={{ opacity: heroOn ? 1 : 0, transform: heroOn ? "none" : "translateY(16px)", transition: "all .7s .1s", marginBottom: 36 }}>
+          <div className="hero-eyebrow" style={{ opacity: heroOn ? 1 : 0, transform: heroOn ? "none" : "translateY(16px)", transition: "all .7s .1s", marginBottom: 36 }}>
             <span className="eyebrow" style={{ color: "rgba(255,255,255,.35)" }}>
               <span style={{ width: 24, height: 1.5, background: "rgba(255,255,255,.2)", display: "block" }} />
               Web Development Agency
@@ -494,7 +616,7 @@ function AdefiyLabs() {
           {/* Giant headline */}
           {["We Build", "Websites", "That Win."].map((line, i) => (
             <div key={line} style={{ overflow: "hidden" }}>
-              <div style={{
+              <div className="hero-headline" style={{
                 fontFamily: "'Syne',sans-serif", fontWeight: 800,
                 fontSize: "clamp(60px,10vw,140px)", lineHeight: .9, letterSpacing: "-.04em",
                 color: i === 1 ? "transparent" : "#fff",
@@ -511,14 +633,14 @@ function AdefiyLabs() {
           ))}
 
           {/* Divider line */}
-          <div style={{ height: 2, background: "linear-gradient(90deg,rgba(139,92,246,.6),rgba(59,130,246,.4),transparent)", marginTop: 36, marginBottom: 36, transformOrigin: "left", transform: heroOn ? "scaleX(1)" : "scaleX(0)", transition: "transform .9s cubic-bezier(.16,1,.3,1) .8s", maxWidth: 240 }} />
+          <div className="hero-divider" style={{ height: 2, background: "linear-gradient(90deg,rgba(139,92,246,.6),rgba(59,130,246,.4),transparent)", marginTop: 36, marginBottom: 36, transformOrigin: "left", transform: heroOn ? "scaleX(1)" : "scaleX(0)", transition: "transform .9s cubic-bezier(.16,1,.3,1) .8s", maxWidth: 240 }} />
 
           {/* Sub + CTAs */}
-          <div style={{ opacity: heroOn ? 1 : 0, transform: heroOn ? "none" : "translateY(20px)", transition: "all .8s .7s", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 36 }}>
-            <p style={{ fontSize: 17, color: "rgba(255,255,255,.45)", maxWidth: 420, lineHeight: 1.78, fontWeight: 300 }}>
+          <div className="hero-sub-row" style={{ opacity: heroOn ? 1 : 0, transform: heroOn ? "none" : "translateY(20px)", transition: "all .8s .7s", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 36 }}>
+            <p className="hero-sub-text" style={{ fontSize: 17, color: "rgba(255,255,255,.45)", maxWidth: 420, lineHeight: 1.78, fontWeight: 300 }}>
               Adefiy Labs builds high-performance web experiences that attract visitors, build trust, and convert them into loyal customers.
             </p>
-            <div style={{ display: "flex", gap: 14 }}>
+            <div className="hero-ctas" style={{ display: "flex", gap: 14 }}>
               <button className="btn-white" data-h onClick={() => go("contact")}>Get Free Proposal →</button>
               <button className="btn-outline" data-h onClick={() => go("work")}>View Our Work</button>
             </div>
@@ -526,7 +648,7 @@ function AdefiyLabs() {
         </div>
 
         {/* Scroll hint */}
-        <div style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, opacity: heroOn ? 1 : 0, transition: "opacity 1s 1.4s" }}>
+        <div className="hero-scroll" style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, opacity: heroOn ? 1 : 0, transition: "opacity 1s 1.4s" }}>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(255,255,255,.2)" }}>Scroll</p>
           <div style={{ width: 1, height: 44, background: "linear-gradient(#fff,transparent)", opacity: .3, animation: "floatC 2s ease-in-out infinite" }} />
         </div>
@@ -534,10 +656,10 @@ function AdefiyLabs() {
 
       {/* ══ STATS ════════════════════════════════════════════ */}
       <div ref={statsRef} style={{ borderTop: "1px solid rgba(255,255,255,.06)", borderBottom: "1px solid rgba(255,255,255,.06)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", padding: "0 52px" }}>
+        <div className="grid-stats" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", padding: "0 52px" }}>
           {STATS.map(([val, label], i) => (
-            <div key={label} style={{ padding: "44px 0", borderRight: i < 3 ? "1px solid rgba(255,255,255,.06)" : "none", paddingLeft: i > 0 ? 48 : 0 }}>
-              <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(38px,4vw,60px)", letterSpacing: "-.04em", lineHeight: 1, marginBottom: 8 }}>
+            <div key={label} className="stat-item" style={{ padding: "44px 0", borderRight: i < 3 ? "1px solid rgba(255,255,255,.06)" : "none", paddingLeft: i > 0 ? 48 : 0 }}>
+              <div className="stat-val" style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(38px,4vw,60px)", letterSpacing: "-.04em", lineHeight: 1, marginBottom: 8 }}>
                 <Counter raw={val} trigger={statsVisible} />
               </div>
               <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: ".1em", color: "rgba(255,255,255,.3)", textTransform: "uppercase" }}>{label}</p>
@@ -551,7 +673,7 @@ function AdefiyLabs() {
         <Marquee items={["Web Design", "Development", "E-Commerce", "Performance", "UI/UX", "React", "Next.js", "SEO", "Branding", "Motion"]} speed={36} />
       </div>
       {/* Big type marquee */}
-      <div style={{ padding: "28px 0 0", overflow: "hidden", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
+      <div className="marq-lg" style={{ padding: "28px 0 0", overflow: "hidden", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
         <Marquee items={["Adefiy Labs", "We Build", "Sites That Win", "Fast & Clean", "Since 2021"]} reverse speed={55} size="lg" />
       </div>
       <div style={{ padding: "0 0 20px", overflow: "hidden", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
@@ -559,7 +681,7 @@ function AdefiyLabs() {
       </div>
 
       {/* ══ SERVICES ═════════════════════════════════════════ */}
-      <section id="services" style={{ padding: "140px 52px" }}>
+      <section id="services" className="s-services" style={{ padding: "140px 52px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 72, flexWrap: "wrap", gap: 24 }}>
             <div>
@@ -570,7 +692,7 @@ function AdefiyLabs() {
             <Reveal delay={.2}><p style={{ fontSize: 15, color: "rgba(255,255,255,.35)", maxWidth: 320, lineHeight: 1.78, fontWeight: 300 }}>Full-stack agency that handles everything from concept to launch — and beyond.</p></Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
+          <div className="grid-services" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
             {SERVICES.map((s, i) => (
               <Reveal key={s.id} delay={i * .12} dir="up">
                 <Tilt strength={12}>
@@ -596,7 +718,7 @@ function AdefiyLabs() {
       </section>
 
       {/* ══ PORTFOLIO ════════════════════════════════════════ */}
-      <section id="work" style={{ padding: "0 52px 140px", borderTop: "1px solid rgba(255,255,255,.05)" }}>
+      <section id="work" className="s-portfolio" style={{ padding: "0 52px 140px", borderTop: "1px solid rgba(255,255,255,.05)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "72px 0 60px", flexWrap: "wrap", gap: 24 }}>
             <div>
@@ -606,12 +728,12 @@ function AdefiyLabs() {
             <Reveal delay={.2}><span style={{ fontSize: 13, color: "rgba(255,255,255,.25)", fontWeight: 600, letterSpacing: ".06em" }}>2023 — 2024</span></Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div className="grid-projects" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
             {PROJECTS.map((p, i) => (
               <Reveal key={p.title} delay={i * .1} dir={i % 2 === 0 ? "left" : "right"}>
                 <Tilt strength={7} style={{ borderRadius: 24 }}>
                   <div className="proj-card" data-h onClick={() => setPreviewProject(p)}>
-                    <div style={{ height: i < 2 ? 360 : 260, background: p.bg, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+                    <div className="proj-img" style={{ height: i < 2 ? 360 : 260, background: p.bg, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
                       {/* Project photo */}
                       <img src={p.img} alt={p.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.45 }} />
                       {/* Accent glow */}
@@ -642,7 +764,7 @@ function AdefiyLabs() {
       </section>
 
       {/* ══ PRICING ══════════════════════════════════════════ */}
-      <section id="pricing" style={{ padding: "140px 52px", background: "rgba(255,255,255,.015)", borderTop: "1px solid rgba(255,255,255,.05)" }}>
+      <section id="pricing" className="s-pricing" style={{ padding: "140px 52px", background: "rgba(255,255,255,.015)", borderTop: "1px solid rgba(255,255,255,.05)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 80 }}>
             <Reveal><span className="eyebrow" style={{ color: "rgba(255,255,255,.3)", justifyContent: "center", marginBottom: 20, display: "flex" }}>Packages</span></Reveal>
@@ -650,7 +772,7 @@ function AdefiyLabs() {
             <Reveal delay={.2}><p style={{ fontSize: 16, color: "rgba(255,255,255,.3)", marginTop: 24, fontWeight: 300 }}>Three tiers. One standard: exceptional work.</p></Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
+          <div className="grid-pricing" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
             {PRICING.map((p, i) => (
               <Reveal key={p.plan} delay={i * .15} dir="up">
                 <Tilt strength={8} style={{ borderRadius: 24, height: "100%" }}>
@@ -697,16 +819,16 @@ function AdefiyLabs() {
       </section>
 
       {/* ══ TESTIMONIALS ═════════════════════════════════════ */}
-      <section style={{ padding: "140px 52px", position: "relative", overflow: "hidden" }}>
+      <section className="s-testimonials" style={{ padding: "140px 52px", position: "relative", overflow: "hidden" }}>
         {/* BG glow */}
         <div ref={testimonialsGlowRef} style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 700, height: 500, background: `radial-gradient(ellipse, ${TESTIMONIALS[activeTest].color}08, transparent 65%)`, transition: "background 1s ease", pointerEvents: "none", borderRadius: "50%" }} />
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <Reveal><span className="eyebrow" style={{ color: "rgba(255,255,255,.3)", marginBottom: 56, display: "flex", justifyContent: "center" }}>Client Stories</span></Reveal>
 
           {/* Testimonial card */}
-          <div style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(255,255,255,.07)", borderRadius: 28, padding: "64px 72px", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: 32, right: 44, fontFamily: "Georgia,serif", fontSize: 120, color: `${TESTIMONIALS[activeTest].color}15`, lineHeight: 1, transition: "color 1s", userSelect: "none", pointerEvents: "none" }}>"</div>
-            <div style={{ position: "relative", minHeight: 220 }}>
+          <div className="testimonial-card" style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(255,255,255,.07)", borderRadius: 28, padding: "64px 72px", position: "relative", overflow: "hidden" }}>
+            <div className="testimonial-quote-mark" style={{ position: "absolute", top: 32, right: 44, fontFamily: "Georgia,serif", fontSize: 120, color: `${TESTIMONIALS[activeTest].color}15`, lineHeight: 1, transition: "color 1s", userSelect: "none", pointerEvents: "none" }}>"</div>
+            <div className="testimonial-body" style={{ position: "relative", minHeight: 220 }}>
               {TESTIMONIALS.map((t, i) => (
                 <div key={i} style={{ position: "absolute", inset: 0, opacity: activeTest === i ? 1 : 0, transform: activeTest === i ? "none" : "translateY(24px)", transition: "all .9s cubic-bezier(.16,1,.3,1)", pointerEvents: activeTest === i ? "auto" : "none" }}>
                   <p style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "clamp(20px,3vw,34px)", lineHeight: 1.35, letterSpacing: "-.02em", color: "#fff", marginBottom: 48, fontStyle: "italic" }}>"{t.q}"</p>
@@ -733,8 +855,8 @@ function AdefiyLabs() {
       </section>
 
       {/* ══ ABOUT ════════════════════════════════════════════ */}
-      <section id="about" style={{ padding: "0 52px 140px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 100, alignItems: "center" }}>
+      <section id="about" className="s-about" style={{ padding: "0 52px 140px" }}>
+        <div className="grid-about" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 100, alignItems: "center" }}>
           <div>
             <Reveal><span className="eyebrow" style={{ color: "rgba(255,255,255,.3)", marginBottom: 22, display: "flex" }}>About Us</span></Reveal>
             <Words text="A studio obsessed" style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(34px,3.8vw,54px)", lineHeight: 1.05, letterSpacing: "-.03em" }} />
@@ -762,14 +884,14 @@ function AdefiyLabs() {
       </section>
 
       {/* ══ CONTACT ══════════════════════════════════════════ */}
-      <section id="contact" style={{ padding: "0 52px 140px" }}>
+      <section id="contact" className="s-contact" style={{ padding: "0 52px 140px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ borderRadius: 32, background: "linear-gradient(135deg,rgba(139,92,246,.08),rgba(59,130,246,.05),rgba(16,185,129,.04))", border: "1px solid rgba(255,255,255,.08)", padding: "80px", position: "relative", overflow: "hidden", animation: "glowPop 4s ease-in-out infinite" }}>
+          <div className="contact-box" style={{ borderRadius: 32, background: "linear-gradient(135deg,rgba(139,92,246,.08),rgba(59,130,246,.05),rgba(16,185,129,.04))", border: "1px solid rgba(255,255,255,.08)", padding: "80px", position: "relative", overflow: "hidden", animation: "glowPop 4s ease-in-out infinite" }}>
             {/* Corner blobs */}
             <div style={{ position: "absolute", top: -80, right: -80, width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle,rgba(139,92,246,.1),transparent)", filter: "blur(40px)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: -60, left: -60, width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle,rgba(16,185,129,.08),transparent)", filter: "blur(40px)", pointerEvents: "none" }} />
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start", position: "relative" }}>
+            <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start", position: "relative" }}>
               <div>
                 <Reveal><span className="eyebrow" style={{ color: "rgba(255,255,255,.3)", marginBottom: 22, display: "flex" }}>Let's Work Together</span></Reveal>
                 <Words text="Start your" style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(36px,4vw,62px)", lineHeight: 1, letterSpacing: "-.03em" }} />
@@ -797,7 +919,7 @@ function AdefiyLabs() {
               ) : (
                 <Reveal delay={.15}>
                   <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <div className="grid-contact-inputs" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                       {[["Your Name", "name", "text", "Alex Johnson"], ["Email", "email", "email", "alex@company.com"]].map(([l, k, t, ph]) => (
                         <div key={k}>
                           <label style={{ display: "block", fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "rgba(255,255,255,.25)", textTransform: "uppercase", marginBottom: 10 }}>{l}</label>
@@ -829,16 +951,16 @@ function AdefiyLabs() {
       </section>
 
       {/* ══ FOOTER ═══════════════════════════════════════════ */}
-      <footer style={{ borderTop: "1px solid rgba(255,255,255,.06)", padding: "64px 52px 48px" }}>
+      <footer className="site-footer" style={{ borderTop: "1px solid rgba(255,255,255,.06)", padding: "64px 52px 48px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 40, marginBottom: 60 }}>
+          <div className="footer-cols" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 40, marginBottom: 60 }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 22, letterSpacing: "-.02em", marginBottom: 16 }}>
                 <span className="dot-pulse" /> Adefiy<span style={{ color: "rgba(255,255,255,.2)", fontWeight: 400 }}> Labs</span>
               </div>
               <p style={{ fontSize: 14, color: "rgba(255,255,255,.3)", maxWidth: 270, lineHeight: 1.8, fontWeight: 300 }}>Building digital experiences that matter, for businesses that mean it.</p>
             </div>
-            <div style={{ display: "flex", gap: 72 }}>
+            <div className="footer-nav" style={{ display: "flex", gap: 72 }}>
               {[["Navigate", ["Services", "Work", "Pricing", "About", "Contact"]], ["Connect", ["hello@adefiy.com", "Instagram", "LinkedIn", "Twitter"]]].map(([title, items]) => (
                 <div key={title}>
                   <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(255,255,255,.18)", marginBottom: 22 }}>{title}</p>
